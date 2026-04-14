@@ -1,0 +1,8 @@
+{
+  "scenario": "ren_short_window",
+  "success_rate_online": 0.9259259259259259,
+  "cpu_ms_ue": 0.7246444444444452,
+  "cpu_ms_leo2": 0.061385185185193154,
+  "cpu_ms_ground": 0.07557037037037075,
+  "cpu_ms_ncc": 0.07557037037037075
+}

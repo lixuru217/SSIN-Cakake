@@ -1,0 +1,104 @@
+services:
+  gm:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: gm
+    command:
+      - python
+      - /app/app/liu2022_gm_server.py
+      - --context
+      - /shared/offline_context_liu.pkl
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --validity-ms
+      - "86400000"
+      - --log-level
+      - INFO
+    volumes:
+      - ./shared:/shared
+    networks:
+      ap_backhaul_net:
+    cap_add:
+      - NET_ADMIN
+
+  ap1:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ap1
+    command:
+      - python
+      - /app/app/liu2022_ap_server.py
+      - --context
+      - /shared/offline_context_liu.pkl
+      - --ap-id
+      - AP-01
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "6000"
+      - --gm-host
+      - gm
+      - --gm-port
+      - "8000"
+      - --log-level
+      - DEBUG
+    volumes:
+      - ./shared:/shared
+    networks:
+      ue_ap1_net:
+      ap_backhaul_net:
+    cap_add:
+      - NET_ADMIN
+
+  ap2:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ap2
+    command:
+      - python
+      - /app/app/liu2022_ap_server.py
+      - --context
+      - /shared/offline_context_liu.pkl
+      - --ap-id
+      - AP-02
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "7000"
+      - --gm-host
+      - gm
+      - --gm-port
+      - "8000"
+      - --log-level
+      - DEBUG
+    volumes:
+      - ./shared:/shared
+    networks:
+      ue_ap2_net:
+      ap_backhaul_net:
+    cap_add:
+      - NET_ADMIN
+
+  ue:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ue
+    command: ["sleep", "infinity"]
+    volumes:
+      - ./shared:/shared
+    networks:
+      ue_ap1_net:
+      ue_ap2_net:
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  ue_ap1_net:
+  ue_ap2_net:
+  ap_backhaul_net:

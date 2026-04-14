@@ -1,0 +1,17 @@
+name: l1_online_only
+mode: LEO_ONLY
+ue_ap2:
+  rtt_ms: [12, 24]
+  jitter_ms: 2
+  loss_pct: [0.0, 0.1]
+ue_ap1:
+  rtt_ms: 14
+  jitter_ms: 1
+  loss_pct: 0.05
+ap_backhaul:
+  rtt_ms: 4
+  jitter_ms: 1
+  loss_pct: 0.01
+timeouts_ms: [200, 400, 600]
+pto: [2]
+runs: 300

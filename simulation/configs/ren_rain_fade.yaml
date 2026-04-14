@@ -1,0 +1,96 @@
+name: ren_rain_fade
+mode: RAIN_FADE
+runs: 300
+timeouts_ms: [300, 400]
+pto: [2]
+links:
+  ter_uavnew:
+    base_rtt_ms: [14, 24]
+    jitter_ms: 2
+    ge_step_ms: 100
+    base_down_mbps: 100
+    base_up_mbps: 20
+    bad_jitter_extra_ms: 1
+    queue_limit: 2000
+    downlink_only: true
+    seed: 42
+    states:
+      light:
+        p_gb: 0.05
+        p_bg: 0.38
+        loss_good: 0.1
+        loss_bad: 3.0
+        bw_factor: 0.8
+      moderate:
+        p_gb: 0.08
+        p_bg: 0.18
+        loss_good: 0.2
+        loss_bad: 6.0
+        bw_factor: 0.5
+      heavy:
+        p_gb: 0.15
+        p_bg: 0.06
+        loss_good: 0.3
+        loss_bad: 14.0
+        bw_factor: 0.25
+        micro_blackout:
+          duration_ms: 300
+          probability_per_s: 0.12
+          loss_pct: 100.0
+      storm:
+        p_gb: 0.19
+        p_bg: 0.05
+        loss_good: 0.6
+        loss_bad: 22.0
+        bw_factor: 0.15
+        micro_blackout:
+          duration_ms: 350
+          probability_per_s: 0.16
+          loss_pct: 100.0
+  uavnew_sat:
+    base_rtt_ms: [14, 24]
+    jitter_ms: 2
+    ge_step_ms: 100
+    base_down_mbps: 100
+    base_up_mbps: 20
+    bad_jitter_extra_ms: 1
+    queue_limit: 2000
+    downlink_only: true
+    seed: 42
+    states:
+      light:
+        p_gb: 0.05
+        p_bg: 0.38
+        loss_good: 0.1
+        loss_bad: 3.0
+        bw_factor: 0.8
+      moderate:
+        p_gb: 0.08
+        p_bg: 0.18
+        loss_good: 0.2
+        loss_bad: 6.0
+        bw_factor: 0.5
+      heavy:
+        p_gb: 0.15
+        p_bg: 0.06
+        loss_good: 0.3
+        loss_bad: 14.0
+        bw_factor: 0.25
+        micro_blackout:
+          duration_ms: 300
+          probability_per_s: 0.12
+          loss_pct: 100.0
+      storm:
+        p_gb: 0.19
+        p_bg: 0.05
+        loss_good: 0.6
+        loss_bad: 22.0
+        bw_factor: 0.15
+        micro_blackout:
+          duration_ms: 350
+          probability_per_s: 0.16
+          loss_pct: 100.0
+  sat_ncc:
+    rtt_ms: 4
+    jitter_ms: 1
+    loss_pct: 0.01

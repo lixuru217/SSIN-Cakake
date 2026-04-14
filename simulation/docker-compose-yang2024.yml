@@ -1,0 +1,39 @@
+services:
+  rsu:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: rsu
+    command:
+      - python
+      - /app/app/yang2024_rsu_target.py
+      - --context
+      - /shared/offline_context_yang2024.pkl
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "6000"
+      - --rsu-id
+      - RSU-02
+    volumes:
+      - ./shared:/shared
+    networks:
+      ue_rsu_net:
+    cap_add:
+      - NET_ADMIN
+
+  ue:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ue
+    command: ["sleep", "infinity"]
+    volumes:
+      - ./shared:/shared
+    networks:
+      ue_rsu_net:
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  ue_rsu_net:

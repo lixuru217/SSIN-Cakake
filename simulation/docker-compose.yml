@@ -1,0 +1,73 @@
+version: "3.9"
+
+services:
+  leo2:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: leo2
+    command:
+      - python
+      - /app/app/leo2_server.py
+      - --context
+      - /shared/offline_context.pkl
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --cache-dir
+      - /shared/preauth
+    volumes:
+      - ./shared:/shared
+    networks:
+      ue_leo_net:
+      isl_net:
+    cap_add:
+      - NET_ADMIN
+
+  ue:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ue
+    command: ["sleep", "infinity"]
+    volumes:
+      - ./shared:/shared
+    networks:
+      ue_leo_net:
+      ue_leo1_net:
+    cap_add:
+      - NET_ADMIN
+
+  leo1:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: leo1
+    command:
+      - python
+      - /app/app/leo1_relay.py
+      - --context
+      - /shared/offline_context.pkl
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "6000"
+      - --leo2-host
+      - leo2
+      - --leo2-port
+      - "5000"
+      - --cache-dir
+      - /shared/preauth
+    volumes:
+      - ./shared:/shared
+    networks:
+      ue_leo1_net:
+      isl_net:
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  ue_leo_net:
+  ue_leo1_net:
+  isl_net:

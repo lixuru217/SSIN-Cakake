@@ -1,0 +1,18 @@
+name: ren_online_only
+mode: LEO_ONLY
+runs: 300
+timeouts_ms: [200, 400, 600]
+pto: [2]
+links:
+  ter_uavnew:
+    rtt_ms: [12, 24]
+    jitter_ms: [2]
+    loss_pct: [0.0, 0.1]
+  uavnew_sat:
+    rtt_ms: [12, 24]
+    jitter_ms: [2]
+    loss_pct: [0.0, 0.1]
+  sat_ncc:
+    rtt_ms: [4]
+    jitter_ms: [1.0]
+    loss_pct: [0.05]

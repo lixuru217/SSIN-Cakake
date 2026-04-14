@@ -1,0 +1,101 @@
+version: "3.9"
+
+services:
+  ren_ncc:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ren_ncc
+    command:
+      - python
+      - /app/app/ren2023_ground.py
+      - --context
+      - /shared/offline_context_ren2023.pkl
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "6000"
+    volumes:
+      - ./shared:/shared
+    networks:
+      ren_sat_ncc:
+        aliases:
+          - ren_ncc
+    cap_add:
+      - NET_ADMIN
+
+  ren_sat:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ren_sat
+    command:
+      - python
+      - /app/app/ren2023_sat.py
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "5500"
+      - --ncc-host
+      - ren_ncc
+      - --ncc-port
+      - "6000"
+    volumes:
+      - ./shared:/shared
+    networks:
+      ren_leo2_sat:
+        aliases:
+          - ren_sat
+      ren_sat_ncc:
+        aliases:
+          - ren_sat
+    cap_add:
+      - NET_ADMIN
+
+  ren_leo2:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ren_leo2
+    command:
+      - python
+      - /app/app/ren2023_uav_server.py
+      - --context
+      - /shared/offline_context_ren2023.pkl
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --ncc-host
+      - ren_sat
+      - --ncc-port
+      - "5500"
+    volumes:
+      - ./shared:/shared
+    networks:
+      ren_ue_leo2:
+        aliases:
+          - ren_leo2
+      ren_leo2_sat:
+        aliases:
+          - ren_leo2
+    cap_add:
+      - NET_ADMIN
+
+  ren_ue:
+    build:
+      context: ..
+      dockerfile: simulation/Dockerfile
+    container_name: ren_ue
+    command: ["sleep", "infinity"]
+    volumes:
+      - ./shared:/shared
+    networks:
+      ren_ue_leo2:
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  ren_ue_leo2:
+  ren_leo2_sat:
+  ren_sat_ncc:

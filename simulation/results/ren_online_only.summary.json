@@ -1,0 +1,8 @@
+{
+  "scenario": "ren_online_only",
+  "success_rate_online": 0.996875,
+  "cpu_ms_ue": 0.4886750000000003,
+  "cpu_ms_leo2": 0.041506249999999946,
+  "cpu_ms_ground": 0.042243750000000496,
+  "cpu_ms_ncc": 0.042243750000000496
+}

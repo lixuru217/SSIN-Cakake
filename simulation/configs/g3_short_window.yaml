@@ -1,0 +1,57 @@
+name: g3_short_window
+mode: SHORT_WINDOW
+ue_leo2:
+  rtt_ms: [14, 24]
+  jitter_ms: 2
+  loss_pct: 0.1
+  loss_pct_window: 0.5
+  base_down_mbps: 100
+  base_up_mbps: 20
+  window_step_ms: 100
+  uplink_delay_ms: [250, 900]
+  downlink_ready_delay_ms: [200, 350]
+  guard_close_ms: [150, 280]
+  micro_blackout:
+    duration_ms: [180, 320]
+    probability_per_s: [0.12, 0.18]
+  window_profiles:
+    short:
+      duration_min_s: 6
+      duration_max_s: 8
+    mid:
+      duration_min_s: 9
+      duration_max_s: 14
+    long:
+      duration_min_s: 14
+      duration_max_s: 22
+ue_leo1:
+  rtt_ms: [14, 24]
+  jitter_ms: 2
+  loss_pct: 0.1
+  loss_pct_window: 0.5
+  base_down_mbps: 100
+  base_up_mbps: 20
+  window_step_ms: 100
+  uplink_delay_ms: [250, 900]
+  downlink_ready_delay_ms: [200, 350]
+  guard_close_ms: [150, 280]
+  micro_blackout:
+    duration_ms: [180, 320]
+    probability_per_s: [0.12, 0.18]
+  window_profiles:
+    short:
+      duration_min_s: 6
+      duration_max_s: 8
+    mid:
+      duration_min_s: 9
+      duration_max_s: 14
+    long:
+      duration_min_s: 14
+      duration_max_s: 22
+isl_helper:
+  rtt_ms: 4
+  jitter_ms: 1
+  loss_pct: 0.01
+timeouts_ms: [300, 400]
+pto: [2]
+runs: 300
