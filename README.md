@@ -65,8 +65,8 @@ described in the paper.
    `UE → S_A → S_B → S_A → UE` exchanged over secure channels established with
    `establish_secure_channel(...)`.
 4. **Public-channel mutual authentication** — the public uplink/downlink
-   computes `Q_i = m_i · (h·P_pub + pk + P)` and verifies
-   `SK_B · Q_i ?= M_i`. The shared point `m_i · M_B` is hashed with `H3`
+   computes `Q_i , V_1` and verifies
+   `V_1`. The shared point `m_i · M_B` is hashed with `H3`
    into the session key.
 5. **Batch verification** — the authenticator uses a VRF-derived seed to pick a
    random subset (Level-1) and to weight an aggregate equation (Level-2),
@@ -193,23 +193,7 @@ The `tests/` suite covers the baseline protocol implementations and includes a
 
 ---
 
-## 6. Citing this work
-
-If you use this code, please cite the paper:
-
-```bibtex
-@article{ssin_cakake,
-  title   = {Collaborator-assisted Handover and Authenticated Key Exchange
-             Protocol with KCI-Resistant for Space-Sea Integrated Networks},
-  author  = {Xuru Li and collaborators},
-  journal = {(to appear)},
-  year    = {2026}
-}
-```
-
----
-
-## 7. License
+## 6. License
 
 * The MIRACL Core sources under `protocols/bn254/`, `protocols/bls12381/`,
   `protocols/ed25519/`, `protocols/constants.py` and `protocols/config.py` are
@@ -221,7 +205,7 @@ If you use this code, please cite the paper:
 
 ---
 
-## 8. Acknowledgements
+## 7. Acknowledgements
 
 * [MIRACL Core](https://github.com/miracl/core) for the elliptic-curve and
   pairing primitives that make the Python prototype tractable.
